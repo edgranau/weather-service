@@ -2,6 +2,7 @@ import axios from 'axios';
 import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
+import logger from 'pino-http';
 import qs from 'qs';
 
 const run = async () => {
@@ -12,25 +13,25 @@ const startServer = async () => {
   const app = express();
   const port = 3000;
 
-  app.use('*', helmet(), cors());
+  app.use('*', helmet(), cors(), logger({name: 'weather-service', level: 'info', autoLogging: false}));
 
   app.get('/v1/weather', async (req, res) => {
     const { city } = qs.parse(req.query);
     let response = await getWeatherStackData(`${city || Melbourne},Australia`);
     if (response) {
-      console.log(`responding with data from weatherStack: ${JSON.stringify(response)}`);
+      req.log.info(`responding with data from weatherStack: ${JSON.stringify(response)}`);
     }
     else {
       response = await getOpenWeatherMapData(`${city || Melbourne},AU`);
       if (response) {
-        console.log(`1st failover. responding with data from openWeatherMap: ${JSON.stringify(response)}`);
+        req.log.info(`1st failover. responding with data from openWeatherMap: ${JSON.stringify(response)}`);
       }
       else {
         response = {
           wind_speed: 5,
           temperature_degrees: 18
         };
-        console.log(`2nd failover. responding with data from cache (to be implemented): ${JSON.stringify(response)}`);
+        req.log.info(`2nd failover. responding with data from cache (to be implemented): ${JSON.stringify(response)}`);
       }
     }
     res.status(200).json(response);
@@ -38,7 +39,7 @@ const startServer = async () => {
 
   await new Promise(resolve => app.listen(port, resolve));
 
-  console.log(`Server listening on port ${port}`);
+  logger().logger.info(`Server listening on port ${port}`);
 
 }
 
