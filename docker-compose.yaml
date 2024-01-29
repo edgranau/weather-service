@@ -1,0 +1,10 @@
+version: '3.9'
+services:
+  server:
+    build: .
+    restart: on-failure
+    ports:
+      - '3000:3000'
+    environment:
+      - OPEN_WEATHER_MAP_API_KEY=your_key
+      - WEATHER_STACK_API_KEY=your_key
