@@ -16,13 +16,24 @@ const startServer = async () => {
 
   app.get('/v1/weather', async (req, res) => {
     const { city } = qs.parse(req.query);
-    const openWeatherMap = await getOpenWeatherMapData(`${city || Melbourne},AU`);
-    const weatherStack = await getWeatherStackData(`${city || Melbourne},Australia`);
-    res.status(200).json({
-      message: `Hello ${city || 'Melbourne'}!`,
-      openWeatherMap,
-      weatherStack
-    });
+    let response = await getWeatherStackData(`${city || Melbourne},Australia`);
+    if (response) {
+      console.log(`responding with data from weatherStack: ${JSON.stringify(response)}`);
+    }
+    else {
+      response = await getOpenWeatherMapData(`${city || Melbourne},AU`);
+      if (response) {
+        console.log(`1st failover. responding with data from openWeatherMap: ${JSON.stringify(response)}`);
+      }
+      else {
+        response = {
+          wind_speed: 5,
+          temperature_degrees: 18
+        };
+        console.log(`2nd failover. responding with data from cache (to be implemented): ${JSON.stringify(response)}`);
+      }
+    }
+    res.status(200).json(response);
   });
 
   await new Promise(resolve => app.listen(port, resolve));
