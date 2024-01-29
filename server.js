@@ -40,7 +40,6 @@ export const getOpenWeatherMapData = async (query) => {
 
   const { data } = await axios.get('https://api.openweathermap.org/data/2.5/weather', { params });
   if (data) {
-    console.log(`openweathermap: ${JSON.stringify(data)}`)
     return {
       wind_speed: data.wind.speed * 3.6, // convert m/s to km/h
       temperature_degrees: data.main.temp
@@ -57,7 +56,6 @@ export const getWeatherStackData = async (query) => {
 
   const { data } = await axios.get('http://api.weatherstack.com/current', { params });
   if (data) {
-    console.log(`weatherstack: ${JSON.stringify(data)}`)
     return {
       wind_speed: data.current.wind_speed,
       temperature_degrees: data.current.temperature
