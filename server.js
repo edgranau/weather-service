@@ -1,10 +1,11 @@
+/* eslint-disable no-undef */
 import axios from 'axios';
 import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
 import logger from 'pino-http';
-import { createClient } from 'redis';
 import qs from 'qs';
+import { createClient } from 'redis';
 
 const run = async () => {
   await startServer();
@@ -29,18 +30,15 @@ const startServer = async () => {
     let response = await redisClient.get(city);
     if (response) {
       req.log.info(`responding with data from cache: ${JSON.stringify(response)}`);
-    }
-    else {
-      response = await getWeatherStackData(`${city || Melbourne},Australia`);
+    } else {
+      response = await getWeatherStackData(`${city || 'Melbourne'},Australia`);
       if (response) {
         req.log.info(`responding with data from weatherStack: ${JSON.stringify(response)}`);
-      }
-      else {
-        response = await getOpenWeatherMapData(`${city || Melbourne},AU`);
+      } else {
+        response = await getOpenWeatherMapData(`${city || 'Melbourne'},AU`);
         if (response) {
           req.log.info(`failover. responding with data from openWeatherMap: ${JSON.stringify(response)}`);
-        }
-        else {
+        } else {
           req.log.error(`weather services offline and no cached data for ${city}`);
           res.status(500).json({ message: `weather services offline and no cached data for ${city}` });
         }
