@@ -1,0 +1,10 @@
+.git
+coverage
+node_modules
+.env
+*eslint*
+docker-compose.yml
+README.md
+jest.*
+*.test.*
+*.cjs
