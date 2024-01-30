@@ -13,5 +13,15 @@
     "sort",
     "sort-destructure-keys",
     "unused-imports"
+  ],
+    "env": {
+    "jest/globals": true
+  },
+  "overrides": [
+    {
+      "files": ["*.test.js"],
+      "plugins": ["jest"],
+      "extends": ["plugin:jest/recommended"]
+    }
   ]
 }
