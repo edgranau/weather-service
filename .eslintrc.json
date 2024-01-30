@@ -1,0 +1,17 @@
+{
+  "root": true,
+  "extends": [
+    "eslint:recommended",
+    "plugin:jest/recommended",
+    "plugin:import/recommended"
+  ],
+  "plugins": [
+    "check-file",
+    "jest",
+    "import",
+    "perfectionist",
+    "sort",
+    "sort-destructure-keys",
+    "unused-imports"
+  ]
+}
