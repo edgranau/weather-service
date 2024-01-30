@@ -59,3 +59,16 @@ Calling the service via curl ( `http://localhost:8080/v1/weather?city=melbourne`
 
 - Working code and instructions provided as zip or hosted on Github
 - Running code hosted or instructions to build and run locally provided.
+
+## Solution
+
+My solution is composed of two parts:
+
+- An `express` app that:
+  - exposes the `/v1/weather` endpoint
+  - handles the calls to the 3rd party weather services
+  - uses a `redis` client to cache the results
+- A `redis` server that handles the data caching
+
+The `express` application and `redis` server are coordinated via `docker-compose`.
+
