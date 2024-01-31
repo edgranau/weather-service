@@ -74,9 +74,11 @@ The `express` application and `redis` server are coordinated via `docker-compose
 
 ## How To
 
-
-
 ### Run it
+
+First You need to edit the `docker-compose.yaml` file and add your API keys for the weather services.
+
+This solution has been tested using `Node v20.11.0`, `npm 10.4.0`, `Docker version 25.0.0, build e758fe5a7f / colima version HEAD-a18cb38` on an Apple M2 Pro running `MacOS Sonoma Version 14.3 (23D56)`.
 
 ```sh
 # Run the service in the background
@@ -93,5 +95,6 @@ curl -fSsL http://localhost:3000/v1/weather?city=melbourne | jq
 ### Test it
 
 ```sh
+npm install
 npm test
 ```
