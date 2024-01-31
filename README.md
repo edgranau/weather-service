@@ -72,3 +72,26 @@ My solution is composed of two parts:
 
 The `express` application and `redis` server are coordinated via `docker-compose`.
 
+## How To
+
+
+
+### Run it
+
+```sh
+# Run the service in the background
+docker-compose up --build -V -d
+
+# Call the service
+curl -fSsL http://localhost:3000/v1/weather?city=melbourne | jq
+{
+  "wind_speed": 26,
+  "temperature_degrees": 21
+}
+```
+
+### Test it
+
+```sh
+npm test
+```
