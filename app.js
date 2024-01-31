@@ -6,8 +6,6 @@ import qs from 'qs';
 import { cacheClient } from './cacheService.js';
 import { getOpenWeatherMapData, getWeatherStackData } from './weatherProviders.js';
 
-await cacheClient.connect();
-
 const app = express();
 
 app.use('*', helmet(), cors(), log);
@@ -30,7 +28,8 @@ app.get('/v1/weather', async (req, res) => {
         res.status(500).json({ message: `weather services offline and no cached data for ${city}` });
       }
     }
-    await cacheClient.set(city, JSON.stringify(response), { EX: 3 }); // set value in cache with a TTL of 3sec
+    await cacheClient.set(city, JSON.stringify(response));
+    await cacheClient.expire(city, 3); // set value in cache with a TTL of 3sec
   }
   res.status(200).json(response);
 });
