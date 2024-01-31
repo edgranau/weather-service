@@ -5,9 +5,9 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "node server.js --es-module-specifier-resolution=node",
+    "start": "node server.js",
     "lint": "eslint --fix *.js",
-    "test": "jest --detectOpenHandles"
+    "test": "jest --detectOpenHandles --forceExit --verbose --runInBand --coverage"
   },
   "keywords": [],
   "author": "Edwin Granados",
