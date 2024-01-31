@@ -6,16 +6,15 @@
     "plugin:import/recommended"
   ],
   "plugins": [
-    "check-file",
     "jest",
-    "import",
-    "perfectionist",
     "sort",
     "sort-destructure-keys",
     "unused-imports"
   ],
-    "env": {
-    "jest/globals": true
+  "rules": {
+    "import/namespace": "off",
+    "import/no-commonjs": "off",
+    "no-undef": "off"
   },
   "overrides": [
     {

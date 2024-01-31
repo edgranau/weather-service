@@ -39,10 +39,12 @@ export const getWeatherStackData = async (query) => {
   return callProvider(url, params, parseWeatherStackData);
 }
 
-const callProvider = (url, params, parser) => {
-  return axios.get(url, { params }).then(response => parser(response))
-    .catch(error => {
-      log.logger.log(JSON.stringify(error));
-      return undefined;
-    });
+const callProvider = async (url, params, parser) => {
+  try {
+    const response = await axios.get(url, { params });
+    return parser(response);
+  } catch (error) {
+    log.logger.info(JSON.stringify(error));
+    return undefined;
+  }
 }
